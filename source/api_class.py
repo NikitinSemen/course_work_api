@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from source.vacancy import Vacancy
 import requests
 
 
@@ -22,9 +23,21 @@ class HeadHunterApi(ApiClass, ABC):
     def get_vacancies(self):
         response = requests.get(self.url, params=self.params)
         vacancies = response.json()['items']
-        for i in vacancies:
-            lulu = {'name': i.get('name'), 'salary': i.get('salary'), 'experience': i.get('experience'),
-                    'roles': i.get('roles')}
+        for vacancy in vacancies:
+            lulu = Vacancy(vacancy.get('name'), vacancy.get('salary'),
+                           vacancy.get('experience').get('name'),
+                           vacancy.get('snippet').get('responsibility'),
+                           vacancy.get('snippet').get('requirement'),
+                           vacancy.get('url'))
             self.vacancies.append(lulu)
         return self.vacancies
 
+
+user_input = input('введите запрос\n')
+num_input = input('количество желаемых вакансий\n')
+hh = HeadHunterApi(user_input, num_input)
+lala = hh.get_vacancies()
+
+for i in lala:
+    print(f'{i.get_name()}\n{i.get_salary()}\n{i.get_experience()}\n{i.get_role()}\n{i.get_requirement()}\n'
+          f'{i.get_url()}\n\n\n\n')
