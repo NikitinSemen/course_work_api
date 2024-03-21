@@ -1,14 +1,11 @@
-from source.api_class import HeadHunterApi
-
-
 class Vacancy:
-    def __init__(self, name, salary, experience, roles):
+    def __init__(self, name, salary, experience, roles, requirement, url):
         self.name = name
         self.salary = salary
         self.experience = experience
         self.roles = roles
-        # self.requirement = requirement
-        # self.url = url
+        self.requirement = requirement
+        self.url = url
 
     def __str__(self):
         return f'{self.name}, {self.salary}., {self.experience}, {self.roles}'
@@ -47,12 +44,4 @@ class Vacancy:
         return self.url
 
 
-user_input = input('введите запрос')
-num_input = input('количество желаемых вакансий')
-hh = HeadHunterApi(user_input, num_input)
-lala = hh.get_vacancies()
-kent = []
-for i in lala:
-    kent.append(Vacancy(**i))
-for i in kent:
-    print(i.get_salary())
+
