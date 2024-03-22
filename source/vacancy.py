@@ -7,6 +7,10 @@ class Vacancy:
         self.requirement = requirement
         self.url = url
 
+    @classmethod
+    def create(cls, *args):
+        return Vacancy(*args)
+
     def __str__(self):
         return f'{self.name}, {self.salary}., {self.experience}, {self.roles}'
 
@@ -42,6 +46,4 @@ class Vacancy:
 
     def get_url(self):
         return self.url
-
-
 
