@@ -5,15 +5,16 @@ import requests
 
 
 class ApiClass(ABC):
+    @staticmethod
     @abstractmethod
-    def get_vacancy(self):
+    def get_vacancy(items):
         pass
 
     def get_response(self):
         pass
 
 
-class HeadHunterApi:
+class HeadHunterApi(ApiClass):
     """
     Класс для работы с API HeadHunter
 
