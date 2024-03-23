@@ -1,3 +1,4 @@
+import json
 from abc import ABC, abstractmethod
 from source.vacancy import Vacancy
 import requests
@@ -25,33 +26,41 @@ class HeadHunterApi:
     @staticmethod
     def get_vacancy(items):
         name = items.get('name')
-        salary = items.get('salary')
+        try:
+            salary = items.get('salary').get('from')
+        except AttributeError:
+            salary = 0
+        try:
+            currency = items.get('salary').get('currency')
+        except AttributeError:
+            currency = ''
         experience = items.get('experience').get('name')
         roles = items.get('snippet').get('responsibility')
         requirement = items.get('snippet').get('requirement')
         url = items.get('url')
-        obj_vacancy = Vacancy.create(name, salary, experience, roles, requirement, url)
+        obj_vacancy = Vacancy.create(name, salary, currency, experience, roles, requirement, url)
         return obj_vacancy
 
     def get_response(self):
         result = []
         response = requests.get(self.__url, params=self.params)
         if response.status_code == 200:
-
             vacancies = response.json()['items']
-            for vacancy in vacancies:
-                data = self.get_vacancy(vacancy)
-                result.append(data)
+            if len(vacancies) == 0:
+                print('Ничего не найдено')
+            else:
+                for vacancy in vacancies:
+                    data = self.get_vacancy(vacancy)
+                    result.append(data)
         else:
-            print('не верный что то там')
+            print('Введены некорректные значения')
         return result
 
 
-user_input = input('введите запрос\n')
-num_input = input('количество желаемых вакансий\n')
-hh = HeadHunterApi(user_input, num_input)
-lala = hh.get_response()
+class SaveJson:
+    def __init__(self, json_file):
+        self.json_file = json_file
 
-for i in lala:
-    print(f'{i.get_name()}\n{i.get_salary()}\n{i.get_experience()}\n{i.get_role()}\n{i.get_requirement()}\n'
-          f'{i.get_url()}\n\n\n\n')
+    def save(self):
+        with open('file.json', 'w') as file:
+            json.dump(self.json_file, file)
