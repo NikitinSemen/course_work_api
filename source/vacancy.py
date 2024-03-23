@@ -1,18 +1,31 @@
 class Vacancy:
-    def __init__(self, name, salary, experience, roles, requirement, url):
+    """
+    Класс для работы с полученными вакансиями HeadHunter
+    """
+
+    def __init__(self,
+                 name: str,
+                 salary: int,
+                 currency: str,
+                 experience: str,
+                 roles: str,
+                 requirement: str,
+                 url: str):
         self.name = name
         self.salary = salary
+        self.currency = currency
         self.experience = experience
         self.roles = roles
         self.requirement = requirement
         self.url = url
 
+    def __str__(self):
+        return (f'{self.name}\n, {self.salary}\n., {self.experience}\n, {self.roles}\n, {self.requirement}\n,'
+                f' {self.url}\n\n\n')
+
     @classmethod
     def create(cls, *args):
         return Vacancy(*args)
-
-    def __str__(self):
-        return f'{self.name}, {self.salary}., {self.experience}, {self.roles}'
 
     def get_requirement(self):
         if self.requirement is None:
@@ -31,19 +44,20 @@ class Vacancy:
         return self.experience
 
     def get_salary(self):
-        if self.salary is None:
-            return f"Зарплата не указана"
-        elif self.salary['from'] is None:
-            return f'Зарплата до {self.salary["to"]}.{self.salary["currency"]}'
-        elif self.salary['to']:
-            return (f'Зарплата от {self.salary["from"]}.{self.salary["currency"]}'
-                    f' до {self.salary["to"]}.{self.salary["currency"]}')
-        else:
-            return f'Зарплата {self.salary["from"]}.{self.salary["currency"]}'
+        return self.salary
 
-    def get_role(self):
+    def get_currency(self):
+        if self.currency == '':
+            return self.currency
+        elif self.currency == 'RUR':
+            self.currency = 'руб'
+            return self.currency
+        elif self.currency == 'KZT':
+            self.currency = 'тенге'
+            return self.currency
+
+    def get_roles(self):
         return self.roles
 
     def get_url(self):
         return self.url
-
