@@ -3,6 +3,9 @@ from source.api_class import SaveJson
 
 
 def main():
+    """
+    Функция для взаимодействия с пользователем
+    """
     print("HeadHunter предлагает Вам найти себе работу по душе")
     user_input = input('                Введите запрос\n')
     num_input = input('количество желаемых вакансий\n')
