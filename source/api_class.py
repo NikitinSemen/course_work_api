@@ -27,8 +27,11 @@ class HeadHunterApi(ApiClass):
     @staticmethod
     def get_vacancy(items):
         name = items.get('name')
+
         try:
             salary = items.get('salary').get('from')
+            if salary is None:
+                salary = 0
         except AttributeError:
             salary = 0
         try:
