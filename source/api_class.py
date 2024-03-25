@@ -61,10 +61,3 @@ class HeadHunterApi(ApiClass):
         return result
 
 
-class SaveJson:
-    def __init__(self, json_file):
-        self.json_file = json_file
-
-    def save(self):
-        with open('file.json', 'w') as file:
-            json.dump(self.json_file, file)
