@@ -2,6 +2,7 @@ class Vacancy:
     """
     Класс для работы с полученными вакансиями HeadHunter
     """
+    __slots__ = ('name', 'salary', 'currency', 'experience', 'roles', 'requirement', 'url')
 
     def __init__(self,
                  name: str,
@@ -85,5 +86,3 @@ class Vacancy:
 
     def get_url(self):
         return self.url
-
-
