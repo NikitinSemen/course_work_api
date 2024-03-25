@@ -1,5 +1,5 @@
 from source.api_class import HeadHunterApi
-from source.api_class import SaveJson
+from source.save_json import SaveJson
 
 
 def main():
